@@ -19,4 +19,5 @@
         <item>Lugazi</item>
         <item>Nyamitanga</item>
     </string-array>
+    <string name="title_activity_place_location">PlaceLocation</string>
 </resources>

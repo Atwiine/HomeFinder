@@ -1,10 +1,5 @@
 package com.example.homefinder;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,12 +9,19 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.homefinder.Adapter.HousesCartAdapter;
 import com.example.homefinder.Adapter.HousesListAdapter;
 import com.example.homefinder.Modal.HousesListModel;
+import com.example.homefinder.Urls.SessionManager;
 import com.example.homefinder.Urls.Urls;
 
 import org.json.JSONArray;
@@ -31,54 +33,67 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HouseList extends AppCompatActivity {
+public class HouseCart extends AppCompatActivity {
     Urls urls;
-    RecyclerView recyclerView;
-    List<HousesListModel> mData;
-    HousesListAdapter adapter;
     NestedScrollView scrollHouseDetails;
     LinearLayout error_message_balance,no_message_balance;
-    TextView errorTxt;
-
+    TextView errorTxt,totalCart;
+    SessionManager sessionManager;
+    String getID;
+    RecyclerView recyclerView;
+    List<HousesListModel> mData;
+    HousesCartAdapter adapter;
 
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_house_list);
+        setContentView(R.layout.activity_house_cart);
+
+        sessionManager = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        getID = user.get(SessionManager.ID);
 
         urls = new Urls();
-
         scrollHouseDetails = findViewById(R.id.scrollHouseDetails);
         error_message_balance = findViewById(R.id.error_message_balance);
         errorTxt = findViewById(R.id.errorTxt);
         no_message_balance = findViewById(R.id.no_message_balance);
+        totalCart = findViewById(R.id.totalCart); // getting the total number in the cart
 
-/*load houses*/
+        /*load cart houses*/
 
-        recyclerView = findViewById(R.id.recyclerview_houses_list);
+        recyclerView = findViewById(R.id.recyclerview_houses_cart);
         mData = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new HousesListAdapter(this, mData);
+        adapter = new HousesCartAdapter(this, mData);
         recyclerView.setAdapter(adapter);
 
-        loadHouses();
+        loadHouseCart(getID);
     }
 
     public void openDetails(View view) {
         /*get the house id to send the details part*/
+        String hId = "2";
+        String order = "Cart";
+        Intent cart = new Intent(HouseCart.this,HouseDetails.class);
+        cart.putExtra("whoSentOrder",order);
+        cart.putExtra("houseID",hId);
+        startActivity(cart);
+    }
+
+    public void goBack(View view) {
+/*figure out who last accessed cart options*/
 
     }
 
-
-
-    private void loadHouses() {
-        final ProgressDialog progressDialog = new ProgressDialog(HouseList.this);
+    private void loadHouseCart(String selected) {
+        final ProgressDialog progressDialog = new ProgressDialog(HouseCart.this);
         progressDialog.setMessage("Loading results, please wait....");
         progressDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, urls.LOAD_HOUSES,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urls.LOAD_HOUSES_CART,
                 response -> {
                     progressDialog.dismiss();
                     try {
@@ -107,7 +122,7 @@ public class HouseList extends AppCompatActivity {
                                         );
                                 mData.add(inputsModel);
                             }
-                            adapter = new HousesListAdapter(HouseList.this, mData);
+                            adapter = new HousesCartAdapter(HouseCart.this, mData);
                             recyclerView.setAdapter(adapter);
                         }
                     } catch (JSONException e) {
@@ -122,9 +137,15 @@ public class HouseList extends AppCompatActivity {
             error_message_balance.setVisibility(View.VISIBLE);
             //Toast.makeText(this, "Something went wrong, check your connection and try again please try again", Toast.LENGTH_SHORT).show();
 
-        });
-        Volley.newRequestQueue(HouseList.this).add(stringRequest);
+        }) {
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("houseid", getID);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
-
 
 }
