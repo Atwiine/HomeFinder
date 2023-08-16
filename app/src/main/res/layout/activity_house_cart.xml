@@ -10,7 +10,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="10dp"
         android:padding="5dp"
         android:background="@color/grey2"
         android:orientation="horizontal">
@@ -19,22 +18,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/countcart"
-            android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
-            android:background="@drawable/bg_lightblack"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_lightblack2"
             android:layout_marginEnd="10dp">
 
             <TextView
+                android:id="@+id/totalCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3"
-                android:padding="12dp"
-                android:textSize="13sp"
-                android:id="@+id/totalCart"
-                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
                 android:fontFamily="@font/poppins_semibold"
+                android:padding="10dp"
+                android:text=""
                 android:textColor="@color/white"
-                />
+                android:textSize="13sp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <TextView
@@ -42,12 +44,14 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
             android:gravity="center_horizontal"
-            android:layout_toEndOf="@id/countcart"
           android:layout_centerVertical="true"
-            android:text="Houses in your cart"
+            android:text="Houses in cart"
             android:layout_gravity="center"
             android:textColor="@color/white"
-            android:textSize="13sp" />
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+           />
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

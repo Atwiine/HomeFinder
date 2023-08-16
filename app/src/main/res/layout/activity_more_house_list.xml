@@ -5,46 +5,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".HouseList">
+    tools:context=".MoreHouseList">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:padding="5dp"
+        android:id="@+id/top"
+        android:background="@color/grey2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center_horizontal"
+            android:layout_centerVertical="true"
+            android:text="More properties"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:onClick="goBack">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="5dp"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24black" />
+
+        </RelativeLayout>
+    </RelativeLayout>
 
 
     <LinearLayout
+        android:layout_below="@id/top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_above="@id/optioncart"
         >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="40dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_baseline_menu_24" />
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:fontFamily="@font/poppins_medium"
-            android:gravity="center_horizontal"
-            android:text="Hi, person"
-            android:textColor="@color/black"
-            android:textSize="35sp" />
-
-    </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -355,44 +367,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:orientation="vertical">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_semibold"
-            android:gravity="center_horizontal"
-            android:text="Best offers"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_semibold"
-                android:gravity="center_horizontal"
-                android:text="View more"
-                android:layout_marginEnd="10dp"
-                android:id="@+id/vvv"
-                android:clickable="true"
-                android:onClick="openMore"
-                android:layout_alignParentEnd="true"
-                android:textColor="@color/grey2"
-                android:textSize="15sp" />
-            <View
-                android:layout_width="30dp"
-                android:layout_height="2dp"
-                android:background="@color/grey2"
-                android:layout_marginEnd="10dp"
-                android:layout_below="@id/vvv"
-                android:layout_alignParentEnd="true"
-                />
-
-        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/error_message_balance"

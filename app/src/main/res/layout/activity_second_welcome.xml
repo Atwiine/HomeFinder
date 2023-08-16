@@ -9,38 +9,15 @@
 
 
 
-        <LinearLayout
+        <RelativeLayout
+            android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:layout_height="40dp"
+            android:background="@color/grey2"
+            android:layout_marginTop="0dp"
             android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="40dp">
-
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:src="@drawable/town" />
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_medium"
-                android:gravity="center_horizontal"
-                android:layout_gravity="center_vertical"
-                android:text="Welcome to Property finder"
-                android:textColor="@color/black"
-                android:textSize="25sp" />
-
-        </LinearLayout>
+        </RelativeLayout>
 
 
     <androidx.core.widget.NestedScrollView
@@ -172,22 +149,30 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="100dp"
+                        android:id="@+id/hh1"
+                        app:cardBackgroundColor="@color/black"
                         android:layout_margin="10dp"
                         app:cardCornerRadius="5dp"
                         app:cardElevation="5dp">
 
-                        <LinearLayout
+                        <RelativeLayout
+                            android:padding="2dp"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical">
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp"
+                                android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:layout_gravity="center"
-                                android:src="@drawable/town" />
-
+                                android:src="@drawable/h11" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_lightblack"
+                            android:layout_alignParentBottom="true"
+                            android:orientation="vertical">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -195,21 +180,25 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:gravity="center_horizontal"
                                 android:text="Houses"
-                                android:textColor="@color/black"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
                                 android:textSize="15sp" />
-                        </LinearLayout>
+                        </RelativeLayout>
+                        </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:id="@+id/hh2"
                         android:layout_height="100dp"
                         android:layout_margin="10dp"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="5dp"
                         app:cardElevation="5dp">
 
-                        <LinearLayout
+                        <RelativeLayout
+                            android:padding="2dp"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="0dp"
@@ -217,11 +206,17 @@
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp"
-                                android:scaleType="fitXY"
+                                android:layout_height="match_parent"
                                 android:layout_gravity="center"
+                                android:scaleType="fitXY"
                                 android:src="@drawable/h22" />
 
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_lightblack"
+                                android:layout_alignParentBottom="true"
+                                android:orientation="vertical">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -229,9 +224,11 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:gravity="center_horizontal"
                                 android:text="Cottages"
-                                android:textColor="@color/black"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
                                 android:textSize="15sp" />
-                        </LinearLayout>
+                            </RelativeLayout>
+                        </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
                 <LinearLayout
@@ -245,9 +242,11 @@
                         android:layout_margin="10dp"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="5dp"
+                        android:id="@+id/hh3"
                         app:cardElevation="5dp">
 
-                        <LinearLayout
+                        <RelativeLayout
+                            android:padding="2dp"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="0dp"
@@ -255,11 +254,16 @@
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp"
+                                android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:layout_gravity="center"
                                 android:src="@drawable/h33" />
-
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_lightblack"
+                                android:layout_alignParentBottom="true"
+                                android:orientation="vertical">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -267,9 +271,11 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:gravity="center_horizontal"
                                 android:text="Apartments"
-                                android:textColor="@color/black"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
                                 android:textSize="15sp" />
-                        </LinearLayout>
+                            </RelativeLayout>
+                        </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
@@ -279,9 +285,11 @@
                         android:layout_margin="10dp"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="5dp"
+                        android:id="@+id/hh4"
                         app:cardElevation="5dp">
 
-                        <LinearLayout
+                        <RelativeLayout
+                            android:padding="2dp"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="0dp"
@@ -289,11 +297,16 @@
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp"
+                                android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:layout_gravity="center"
                                 android:src="@drawable/h55" />
-
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_lightblack"
+                                android:layout_alignParentBottom="true"
+                                android:orientation="vertical">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -301,9 +314,11 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:gravity="center_horizontal"
                                 android:text="Offices"
-                                android:textColor="@color/black"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
                                 android:textSize="15sp" />
-                        </LinearLayout>
+                            </RelativeLayout>
+                        </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
                 <LinearLayout
@@ -317,20 +332,27 @@
                         android:layout_margin="10dp"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="5dp"
+                        android:id="@+id/hh5"
                         app:cardElevation="5dp">
 
-                        <LinearLayout
+                        <RelativeLayout
+                            android:padding="2dp"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical">
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp"
+                                android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:layout_gravity="center"
                                 android:src="@drawable/h33" />
-
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_lightblack"
+                                android:layout_alignParentBottom="true"
+                                android:orientation="vertical">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -338,9 +360,53 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:gravity="center_horizontal"
                                 android:text="Cottages"
-                                android:textColor="@color/black"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
                                 android:textSize="15sp" />
-                        </LinearLayout>
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="100dp"
+                        android:layout_margin="10dp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="5dp"
+                        android:id="@+id/hh6"
+                        app:cardElevation="5dp">
+
+                        <RelativeLayout
+                            android:padding="2dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY"
+                                android:layout_gravity="center"
+                                android:src="@drawable/h33" />
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_lightblack"
+                                android:layout_alignParentBottom="true"
+                                android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:gravity="center_horizontal"
+                                android:text="Gardens"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
+                                android:textSize="15sp" />
+                            </RelativeLayout>
+                        </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
                 </LinearLayout>

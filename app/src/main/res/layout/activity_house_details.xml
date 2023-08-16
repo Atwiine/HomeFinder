@@ -93,8 +93,10 @@
     </LinearLayout>
 
 
+
+<!--    android:layout_above="@id/bottom"-->
     <androidx.core.widget.NestedScrollView
-        android:layout_above="@id/bottom"
+
         android:id="@+id/scrollHouseDetails"
         android:visibility="visible"
         android:layout_width="match_parent"
@@ -154,6 +156,23 @@
                             android:fontFamily="@font/poppins_medium"
                             android:text="Katete, Kampala"
                             android:textColor="@color/white"
+                            android:textSize="13sp"
+                            android:textStyle="normal"
+                            app:drawableStartCompat="@drawable/ic_baseline_location_on_24" />
+
+
+
+                        <TextView
+                            android:id="@+id/houseCoordinates"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/txtheading"
+                            android:layout_marginStart="10dp"
+                            android:drawablePadding="8dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:visibility="gone"
                             android:textSize="13sp"
                             android:textStyle="normal"
                             app:drawableStartCompat="@drawable/ic_baseline_location_on_24" />
@@ -244,9 +263,11 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/houseDescription"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="0dp"
                     android:fontFamily="@font/poppins_medium"
@@ -255,7 +276,35 @@
                     android:textSize="13sp"
                     android:textStyle="normal" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Price/month"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="232"
+                    android:id="@+id/houseprice"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="200dp"
+                    android:layout_height="0.8dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:background="@color/grey2"/>
                 <RelativeLayout
                     android:visibility="gone"
                     android:layout_width="match_parent"
@@ -365,7 +414,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/h11" />
+                            android:src="@drawable/h22" />
                     </com.google.android.material.card.MaterialCardView>
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/card_imagegallery3"
@@ -380,7 +429,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/h11" />
+                            android:src="@drawable/h33" />
                     </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
@@ -397,139 +446,198 @@
             </LinearLayout>
 
 
+            <RelativeLayout
+                android:visibility="visible"
+                android:id="@+id/bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/bottomDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical">
 
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:id="@+id/txtpri"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Price"
+                        android:textColor="@color/grey"
+                        android:textSize="13sp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:id="@+id/txtprice"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="2445/ month"
+                        android:layout_below="@id/txtpri"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="normal" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_cart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="10dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardBackgroundColor="@color/grey"
+                        app:cardElevation="6dp">
+
+                        <TextView
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:drawablePadding="10dp"
+                            android:drawableEnd="@drawable/ic_baseline_add_shopping_cart_24white"
+                            android:padding="10dp"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add to Cart"
+                            />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/bottomCart"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:id="@+id/txtpricart"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Price"
+                        android:textColor="@color/grey"
+                        android:textSize="13sp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:id="@+id/txtpricecart"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="2445/ month"
+                        android:layout_below="@id/txtpricart"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="normal" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_open_cart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="10dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardBackgroundColor="@color/grey"
+                        app:cardElevation="6dp">
+
+                        <TextView
+                            android:id="@+id/rentnow"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Open cart"
+                            />
+                    </com.google.android.material.card.MaterialCardView>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/bottomRent"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:id="@+id/txtpricartrent"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Price"
+                        android:textColor="@color/grey"
+                        android:textSize="13sp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:id="@+id/txtpricerent"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="2445/ month"
+                        android:layout_below="@id/txtpricartrent"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="normal" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_open_rent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="10dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardBackgroundColor="@color/grey"
+                        app:cardElevation="6dp">
+
+                        <TextView
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Call to book house"
+                            />
+                    </com.google.android.material.card.MaterialCardView>
+
+                </RelativeLayout>
+            </RelativeLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <RelativeLayout
-        android:visibility="visible"
-        android:id="@+id/bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/bottomDetails"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/txtpri"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Price"
-            android:textColor="@color/grey"
-            android:textSize="13sp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="20dp"
-            android:id="@+id/txtprice"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="2445/ month"
-            android:layout_below="@id/txtpri"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="normal" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"
-            app:cardCornerRadius="10dp"
-            app:cardBackgroundColor="@color/grey"
-            app:cardElevation="6dp">
-
-        <TextView
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:drawablePadding="10dp"
-            android:drawableEnd="@drawable/ic_baseline_add_shopping_cart_24white"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add to Cart"
-            />
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/bottomCart"
-        android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/txtpricart"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Price"
-            android:textColor="@color/grey"
-            android:textSize="13sp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="20dp"
-            android:id="@+id/txtpricecart"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="2445/ month"
-            android:layout_below="@id/txtpricart"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="normal" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_rent"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"
-            app:cardCornerRadius="10dp"
-            app:cardBackgroundColor="@color/grey"
-            app:cardElevation="6dp">
-
-            <TextView
-                android:id="@+id/rentnow"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rent Now"
-                />
-        </com.google.android.material.card.MaterialCardView>
-
-    </RelativeLayout>
-    </RelativeLayout>
 
 </RelativeLayout>

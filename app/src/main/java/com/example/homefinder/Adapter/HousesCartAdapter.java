@@ -1,12 +1,15 @@
 package com.example.homefinder.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,31 +23,74 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.homefinder.HouseCart;
 import com.example.homefinder.HouseDetails;
 import com.example.homefinder.Modal.HousesListModel;
 import com.example.homefinder.R;
+import com.example.homefinder.Urls.SessionManager;
 import com.example.homefinder.Urls.Urls;
 import com.google.android.material.card.MaterialCardView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HousesCartAdapter extends RecyclerView.Adapter<HousesCartAdapter.HouseViewHolder> {
+public class HousesCartAdapter extends RecyclerView.Adapter<HousesCartAdapter.HouseViewHolder> implements Filterable {
     Context context;
     public static List<HousesListModel> mData;
     Urls urls;
-    //    SessionManager sessionManager;
-    String getTYPE;
-    String getId, idPost, teacher;
+        SessionManager sessionManager;
+    List<HousesListModel> markets_filter;
+    String getId;
+
+
+    private final Filter examplefilter = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<HousesListModel> filterexample = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filterexample.addAll(markets_filter);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (HousesListModel marketsModel : markets_filter) {
+                    if (marketsModel.getHouseLocation().toLowerCase().contains(filterPattern)) {
+                        filterexample.add(marketsModel);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filterexample;
+            return results;
+
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            mData.clear();
+            mData.addAll((Collection<? extends HousesListModel>) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+
 
     public HousesCartAdapter(Context context, List<HousesListModel> mData) {
         this.context = context;
         this.mData = mData;
         urls = new Urls();
+        sessionManager = new SessionManager(context);
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        getId = user.get(SessionManager.ID);
     }
 
 
@@ -71,8 +117,9 @@ public class HousesCartAdapter extends RecyclerView.Adapter<HousesCartAdapter.Ho
         holder.housebedrooms.setText(mData.get(position).getHousebedrooms());
         holder.housebathrooms.setText(mData.get(position).getHousebathrooms());
         holder.houseDescription.setText(mData.get(position).getHouseDescription());
+        holder.deleteCart.setVisibility(View.VISIBLE);
 
-        String imageUrl = urls.https + "house_images/" + housesListModel.getHouseImage();
+        String imageUrl = urls.https + "admin/assets/uploads/rentals/" + housesListModel.getHouseImage();
         try {
 
             Glide.with(context)
@@ -84,70 +131,30 @@ public class HousesCartAdapter extends RecyclerView.Adapter<HousesCartAdapter.Ho
 
 
 
-        /*adding house in cart OPTIONS*/
-        holder.addCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                final String hid = holder.houseid.getText().toString();
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, urls.ADD_HOUSE_CART,
-                        response -> {
-                            try {
-                                Log.i("tagconvertstr", "[" + response + "]");
-                                JSONObject object = new JSONObject(response);
-                                String success = object.getString("success");
-                                if (success.equals("1")) {
-                                    Log.i("tagconvertstr", "[" + response + "]");
-
-                                    Toast.makeText(context, "Added to cart", Toast.LENGTH_SHORT).show();
-
-                                }
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Toast.makeText(context, "Not added to cart, please try again " + e.getMessage(), Toast.LENGTH_LONG).show();
-
-                            }
-                        }, error -> {
-                    Toast.makeText(context, "Not added to cart, please check your network and try again", Toast.LENGTH_LONG).show();
-
-                }) {
-
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<>();
-                        params.put("id", hid);
-                        return params;
-
-                    }
-                };
-                RequestQueue requestQueue = Volley.newRequestQueue(context);
-                requestQueue.add(stringRequest);
-            }
-
-        });
 
     }
+
+
 
     @Override
     public int getItemCount() {
         return mData.size();
     }
 
-    public void clear() {
-        int size = mData.size();
-        if (size > 0) {
-            mData.subList(0, size).clear();
+    @Override
+    public Filter getFilter() {
+        return examplefilter;
+    }
 
-            notifyItemRangeRemoved(0, size);
-        }
+    public void filterList(ArrayList<HousesListModel> filteredList) {
+        mData = filteredList;
+        notifyDataSetChanged();
     }
 
     public class HouseViewHolder extends RecyclerView.ViewHolder {
 
         TextView housename, houseprice, houseCoordinates, houseid, houseLocation, housebedrooms, housebathrooms,houseDescription;
-        RelativeLayout addCart;
+        MaterialCardView deleteCart;
    ImageView houseImage;
         MaterialCardView card_house;
 
@@ -161,7 +168,7 @@ public class HousesCartAdapter extends RecyclerView.Adapter<HousesCartAdapter.Ho
             housebedrooms = itemView.findViewById(R.id.housebedrooms);
             housebathrooms = itemView.findViewById(R.id.housebathrooms);
             houseDescription = itemView.findViewById(R.id.houseDescription);
-            addCart = itemView.findViewById(R.id.addCart);
+            deleteCart = itemView.findViewById(R.id.deleteCart);
             houseImage = itemView.findViewById(R.id.houseImage);
             card_house = itemView.findViewById(R.id.card_house);
 
@@ -174,9 +181,66 @@ public class HousesCartAdapter extends RecyclerView.Adapter<HousesCartAdapter.Ho
                     Intent cart = new Intent(context, HouseDetails.class);
                     cart.putExtra("whoSentOrder",order);
                     cart.putExtra("houseID",hId);
+                    cart.putExtra("housename", mData.get(getAdapterPosition()).getHousename());
+                    cart.putExtra("houseprice", mData.get(getAdapterPosition()).getHouseprice());
+                    cart.putExtra("houseCoordinates", mData.get(getAdapterPosition()).getHouseCoordinates());
+                    cart.putExtra("houseid", mData.get(getAdapterPosition()).getHouseid());
+                    cart.putExtra("houseLocation", mData.get(getAdapterPosition()).getHouseLocation());
+                    cart.putExtra("housebedrooms", mData.get(getAdapterPosition()).getHousebedrooms());
+                    cart.putExtra("housebathrooms", mData.get(getAdapterPosition()).getHousebathrooms());
+                    cart.putExtra("houseDescription", mData.get(getAdapterPosition()).getHouseDescription());
+                    cart.putExtra("image_url", urls.https + "admin/assets/uploads/rentals/" + mData.get(getAdapterPosition()).getHouseImage());
                     context.startActivity(cart);
                 }
             });
+
+            /*adding house in cart OPTIONS*/
+            deleteCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    final String hid = houseid.getText().toString();
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urls.DELETE_HOUSE_CART,
+                            response -> {
+                                try {
+                                    Log.i("tagconvertstr", "[" + response + "]");
+                                    JSONObject object = new JSONObject(response);
+                                    String success = object.getString("success");
+                                    if (success.equals("1")) {
+                                        Log.i("tagconvertstr", "[" + response + "]");
+
+                                        Toast.makeText(context, "Deleted from cart", Toast.LENGTH_SHORT).show();
+                                        Intent ss = new Intent(context, HouseCart.class);
+                                        context.startActivity(ss);
+                                        ((Activity)context).finish();
+
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(context, "Not deleted from cart, please try again ", Toast.LENGTH_LONG).show();
+
+                                }
+                            }, error -> {
+                        Toast.makeText(context, "Not deleted from cart, please check your network and try again " , Toast.LENGTH_LONG).show();
+
+                    }) {
+
+                        @Override
+                        protected Map<String, String> getParams() {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("houseid", hid);
+                            params.put("userid", "1");
+                            return params;
+
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(context);
+                    requestQueue.add(stringRequest);
+                }
+
+            });
+
 
         }
     }

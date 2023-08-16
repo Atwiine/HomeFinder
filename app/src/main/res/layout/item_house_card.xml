@@ -39,12 +39,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:layout_margin="5dp"
+                    android:layout_marginStart="5dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:text="Teet rentals"
                     android:textColor="@color/grey"
-                    android:textSize="13sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/houseLocation"
@@ -52,8 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/housename"
                     android:layout_gravity="start"
-                    android:layout_margin="5dp"
-                    android:drawablePadding="5dp"
+                    android:layout_marginStart="5dp"
                     android:fontFamily="@font/poppins_medium"
                     android:gravity="center_horizontal"
                     android:text="Teet Kakyeka, Mbarara"
@@ -67,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/houseLocation"
                     android:layout_gravity="start"
-                    android:layout_margin="5dp"
+                    android:layout_marginStart="5dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:text=""
@@ -139,46 +138,55 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/houseLocation"
                     android:layout_gravity="start"
-                    android:layout_margin="5dp"
+                    android:layout_marginStart="5dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:text="124,000/per month"
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textStyle="bold"
+                    android:textSize="13sp" />
 
-                <RelativeLayout
-                    android:id="@+id/addCart"
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:cardElevation="5dp"
                     android:layout_alignParentEnd="true"
+                    app:cardCornerRadius="10dp"
+                    android:visibility="invisible"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:orientation="vertical">
+                    android:id="@+id/deleteCart"
+                    >
+                    <RelativeLayout
 
-                    <ImageButton
-                        android:id="@+id/addcart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/ic_baseline_add_shopping_cart_24"
+                        android:background="@color/red"
+                        android:padding="5dp"
+                        android:orientation="vertical">
 
-                        />
+                        <ImageButton
+                            android:id="@+id/addcart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_baseline_remove_shopping_cart_24"
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/addcart"
-                        android:layout_gravity="start"
-                        android:fontFamily="@font/poppins_medium"
-                        android:gravity="center_horizontal"
-                        android:text="Add to Cart"
-                        android:textColor="@color/grey"
-                        android:textSize="13sp" />
-                </RelativeLayout>
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/addcart"
+                            android:layout_gravity="start"
+                            android:fontFamily="@font/poppins_medium"
+                            android:gravity="center_horizontal"
+                            android:text="Delete from Cart"
+                            android:textColor="@color/white"
+                            android:textSize="13sp" />
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+
             </RelativeLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

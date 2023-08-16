@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,9 +21,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.homefinder.Adapter.HousesCartAdapter;
+import com.example.homefinder.Adapter.HousesListAdapter;
 import com.example.homefinder.Modal.HousesListModel;
-import com.example.homefinder.Urls.SessionManager;
 import com.example.homefinder.Urls.Urls;
 
 import org.json.JSONArray;
@@ -32,78 +34,87 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HouseCart extends AppCompatActivity {
+public class MoreHouseList extends AppCompatActivity {
     Urls urls;
-    NestedScrollView scrollHouseDetails;
-    LinearLayout error_message_balance, no_message_balance;
-    TextView errorTxt, totalCart;
-    SessionManager sessionManager;
-    String getID;
     RecyclerView recyclerView;
     List<HousesListModel> mData;
-    HousesCartAdapter adapter;
-    String whoSentOrder;
+    HousesListAdapter adapter;
+    NestedScrollView scrollHouseDetails;
+    LinearLayout error_message_balance,no_message_balance;
+    TextView errorTxt,totalCart;
+    EditText search;
     String countCart = "";
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_house_cart);
-
-        sessionManager = new SessionManager(getApplicationContext());
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getID = user.get(SessionManager.ID);
+        setContentView(R.layout.activity_more_house_list);
 
         urls = new Urls();
+
+
         scrollHouseDetails = findViewById(R.id.scrollHouseDetails);
         error_message_balance = findViewById(R.id.error_message_balance);
         errorTxt = findViewById(R.id.errorTxt);
         no_message_balance = findViewById(R.id.no_message_balance);
         totalCart = findViewById(R.id.totalCart); // getting the total number in the cart
 
-        whoSentOrder = getIntent().getStringExtra("whoSentOrder");
+        /*searching option*/
+        search = findViewById(R.id.search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search.setFocusableInTouchMode(true);
+                search.setFocusable(true);
+            }
+        });
+        search.setFocusableInTouchMode(false);
+        search.setFocusable(false);
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        /*count cart*/
-        checkCart();
+            }
 
-        /*load cart houses*/
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-        recyclerView = findViewById(R.id.recyclerview_houses_cart);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+
+/*load houses*/
+
+        recyclerView = findViewById(R.id.recyclerview_houses_list);
         mData = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new HousesCartAdapter(this, mData);
+        adapter = new HousesListAdapter(this, mData);
         recyclerView.setAdapter(adapter);
 
-        loadHouseCart(getID);
+        loadHouses();
+        /*count cart*/
+        checkCart();
     }
 
     public void openDetails(View view) {
         /*get the house id to send the details part*/
-        String hId = "2";
-        String order = "Cart";
-        Intent cart = new Intent(HouseCart.this, HouseDetails.class);
-        cart.putExtra("whoSentOrder", order);
-        cart.putExtra("houseID", hId);
-        startActivity(cart);
+
     }
 
-    public void goBack(View view) {
-        if ("Details".equals(whoSentOrder)) {
-            startActivity(new Intent(HouseCart.this, HouseDetails.class));
-            finish();
-        } else {
-            startActivity(new Intent(HouseCart.this, HouseList.class));
-            finish();
-        }
-    }
 
-    private void loadHouseCart(String selected) {
-        final ProgressDialog progressDialog = new ProgressDialog(HouseCart.this);
+
+
+    private void loadHouses() {
+        final ProgressDialog progressDialog = new ProgressDialog(MoreHouseList.this);
         progressDialog.setMessage("Loading results, please wait....");
         progressDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, urls.LOAD_HOUSES_CART,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urls.LOAD_ALL_HOUSES,
                 response -> {
                     progressDialog.dismiss();
                     try {
@@ -113,19 +124,23 @@ public class HouseCart extends AppCompatActivity {
                             no_message_balance.setVisibility(View.VISIBLE);
                             scrollHouseDetails.setVisibility(View.GONE);
                         } else {
+
+                            scrollHouseDetails.setVisibility(View.VISIBLE);
+
                             for (int i = 0; i < tips.length(); i++) {
                                 JSONObject inputsObjects = tips.getJSONObject(i);
 
                                 String housename = inputsObjects.getString("housename");
                                 String houseprice = inputsObjects.getString("houseprice");
                                 String houseCoordinatesLat = inputsObjects.getString("houseCoordinatesLat");
-                                String houseCoordinatesLong = inputsObjects.getString("houseCoordinatesLong");
+                                String houseCoordinatesLong =  inputsObjects.getString("houseCoordinatesLong");
                                 String houseid = inputsObjects.getString("houseid");
                                 String houseLocation = inputsObjects.getString("houseLocation");
                                 String housebedrooms = inputsObjects.getString("housebedrooms");
                                 String housebathrooms = inputsObjects.getString("housebathrooms");
                                 String houseDescription = inputsObjects.getString("houseDescription");
                                 String houseImage = inputsObjects.getString("houseImage");
+
                                 String houseCoordinates = houseCoordinatesLat + houseCoordinatesLong;
 
                                 /*get the total*/
@@ -133,11 +148,11 @@ public class HouseCart extends AppCompatActivity {
 
                                 HousesListModel inputsModel =
                                         new HousesListModel(housename, houseprice, houseCoordinates, houseid,
-                                                houseLocation, housebedrooms, housebathrooms, houseDescription, houseImage
+                                                houseLocation, housebedrooms, housebathrooms,houseDescription,houseImage
                                         );
                                 mData.add(inputsModel);
                             }
-                            adapter = new HousesCartAdapter(HouseCart.this, mData);
+                            adapter = new HousesListAdapter(MoreHouseList.this, mData);
                             recyclerView.setAdapter(adapter);
                         }
                     } catch (JSONException e) {
@@ -149,19 +164,26 @@ public class HouseCart extends AppCompatActivity {
                     }
                 }, error -> {
             progressDialog.dismiss();
-            errorTxt.setText(error.toString());
             error_message_balance.setVisibility(View.VISIBLE);
+            errorTxt.setText(error.toString());
+
             //Toast.makeText(this, "Something went wrong, check your connection and try again please try again", Toast.LENGTH_SHORT).show();
 
-        }) {
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("userid", "1");
-                return params;
+        });
+        Volley.newRequestQueue(MoreHouseList.this).add(stringRequest);
+    }
+
+
+    private void filter(String text) {
+        ArrayList<HousesListModel> filteredList = new ArrayList<>();
+
+        for (HousesListModel item : mData) {
+            if (item.getHouseLocation().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
             }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+        }
+
+        adapter.filterList(filteredList);
     }
 
     /*checking if the cart has a max of two houses*/
@@ -212,5 +234,18 @@ public class HouseCart extends AppCompatActivity {
     }
 
 
+    public void openCart(View view) {
+        String order = "List";
+        Intent cart = new Intent(MoreHouseList.this, HouseCart.class);
+        cart.putExtra("whoSentOrder", order);
+        startActivity(cart);
 
+    }
+
+
+
+    public void goBack(View view) {
+        startActivity(new Intent(MoreHouseList.this,HouseList.class));
+        finish();
+    }
 }
